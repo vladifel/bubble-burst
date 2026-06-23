@@ -1,7 +1,7 @@
 {
   "projectId": "6637312887400384403",
   "projectTitle": "Bubble Burst Design Blueprint",
-  "fetchedAt": "2026-06-23",
+  "fetchedAt": "2026-06-24",
   "screens": [
     {
       "id": "assets_5d36185a44d24c00ab38ea606a27688c",
@@ -47,7 +47,15 @@
       "id": "742e2daf755641d68fdaece839f94117",
       "title": "Bubble Burst Simulator Game Icon",
       "files": {
-        "screenshot": "screens/app-icon/screenshot.png",
+        "screenshot": "screens/app-icon/screenshot.png"
+      }
+    },
+    {
+      "id": "29f3b3a534de4531abfcc74725d30c73",
+      "title": "Bubble Burst Game Icon (Dark Background)",
+      "dimensions": "1024x1024",
+      "files": {
+        "screenshot": "screens/app-icon-dark/screenshot.png",
         "appIcon": "../assets/icon.png"
       }
     },
