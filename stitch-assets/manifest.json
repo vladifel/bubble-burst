@@ -55,7 +55,15 @@
       "title": "Bubble Burst Game Icon (Dark Background)",
       "dimensions": "1024x1024",
       "files": {
-        "screenshot": "screens/app-icon-dark/screenshot.png",
+        "screenshot": "screens/app-icon-dark/screenshot.png"
+      }
+    },
+    {
+      "id": "6030f62e4bec4f9d836535d69adda98a",
+      "title": "Bubble Burst Game Icon (World Background)",
+      "dimensions": "1024x1024",
+      "files": {
+        "screenshot": "screens/app-icon-world-bg/screenshot.png",
         "appIcon": "../assets/icon.png"
       }
     },
