@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bubble Pop - Results</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@700&amp;family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface-variant": "#b9cac9",
+                        "on-primary-container": "#007070",
+                        "surface-bright": "#373943",
+                        "on-tertiary-fixed-variant": "#005306",
+                        "primary-fixed": "#00fbfb",
+                        "inverse-on-surface": "#2e303a",
+                        "surface-container-highest": "#32343e",
+                        "error-container": "#93000a",
+                        "on-primary-fixed-variant": "#004f4f",
+                        "on-tertiary-fixed": "#002201",
+                        "surface-container": "#1d1f29",
+                        "surface-tint": "#00dddd",
+                        "secondary-fixed": "#ffd7f5",
+                        "surface-variant": "#32343e",
+                        "on-error": "#690005",
+                        "surface-container-low": "#191b24",
+                        "surface-container-high": "#282933",
+                        "on-surface": "#e1e1ef",
+                        "surface-container-lowest": "#0c0e17",
+                        "secondary-container": "#fe00fe",
+                        "on-secondary-fixed": "#380038",
+                        "secondary": "#ffabf3",
+                        "outline": "#839493",
+                        "inverse-primary": "#006a6a",
+                        "primary-fixed-dim": "#00dddd",
+                        "background": "#11131c",
+                        "surface-dim": "#11131c",
+                        "tertiary-container": "#75ff68",
+                        "on-tertiary": "#003a03",
+                        "tertiary": "#ffffff",
+                        "tertiary-fixed": "#75ff68",
+                        "primary-container": "#00fbfb",
+                        "on-primary": "#003737",
+                        "on-tertiary-container": "#00750c",
+                        "secondary-fixed-dim": "#ffabf3",
+                        "surface": "#11131c",
+                        "on-primary-fixed": "#002020",
+                        "error": "#ffb4ab",
+                        "primary": "#ffffff",
+                        "on-error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#4ce346",
+                        "on-secondary-container": "#500050",
+                        "on-secondary-fixed-variant": "#810081",
+                        "on-background": "#e1e1ef",
+                        "on-secondary": "#5b005b",
+                        "outline-variant": "#3a4a49",
+                        "inverse-surface": "#e1e1ef"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "24px",
+                        "unit": "8px",
+                        "gutter": "16px",
+                        "element-gap": "12px"
+                    },
+                    "fontFamily": {
+                        "label-bold": ["Be Vietnam Pro"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "display-lg-mobile": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "label-bold": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-lg-mobile": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "800" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 1px solid rgba(0, 251, 251, 0.1);
+            border-right: 1px solid rgba(0, 251, 251, 0.1);
+            box-shadow: inset 0 0 40px rgba(0, 251, 251, 0.05), 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .bubble-frame {
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.05) 40%, rgba(0, 251, 251, 0.1) 80%, rgba(0, 251, 251, 0.3) 100%);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: inset -10px -10px 20px rgba(0, 251, 251, 0.2), inset 10px 10px 20px rgba(255, 255, 255, 0.4), 0 10px 30px rgba(0, 251, 251, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .neon-text-primary {
+            text-shadow: 0 0 10px rgba(0, 251, 251, 0.8), 0 0 20px rgba(0, 251, 251, 0.4);
+        }
+
+        .neon-text-secondary {
+            text-shadow: 0 0 10px rgba(254, 0, 254, 0.8), 0 0 20px rgba(254, 0, 254, 0.4);
+        }
+
+        .neon-text-tertiary {
+            text-shadow: 0 0 10px rgba(117, 255, 104, 0.8), 0 0 20px rgba(117, 255, 104, 0.4);
+        }
+
+        .glow-button-primary {
+            background: linear-gradient(135deg, rgba(117, 255, 104, 0.2), rgba(117, 255, 104, 0.05));
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(255, 255, 255, 0.4);
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 1px solid rgba(117, 255, 104, 0.4);
+            border-right: 1px solid rgba(117, 255, 104, 0.2);
+            box-shadow: inset 0 0 20px rgba(117, 255, 104, 0.2), 0 0 30px rgba(117, 255, 104, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .glow-button-primary:hover {
+            box-shadow: inset 0 0 30px rgba(117, 255, 104, 0.4), 0 0 50px rgba(117, 255, 104, 0.5);
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        .glow-button-secondary {
+            background: rgba(0, 251, 251, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 251, 251, 0.5);
+            box-shadow: inset 0 0 15px rgba(0, 251, 251, 0.1), 0 0 20px rgba(0, 251, 251, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .glow-button-secondary:hover {
+            box-shadow: inset 0 0 25px rgba(0, 251, 251, 0.2), 0 0 30px rgba(0, 251, 251, 0.3);
+            transform: translateY(-2px) scale(1.02);
+            background: rgba(0, 251, 251, 0.1);
+        }
+
+        .progress-bar-track {
+            background: rgba(0, 0, 0, 0.4);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .progress-bar-fill-cyan {
+            background: linear-gradient(90deg, rgba(0, 251, 251, 0.5), rgba(0, 251, 251, 1));
+            box-shadow: 0 0 15px rgba(0, 251, 251, 0.8), inset 0 2px 4px rgba(255, 255, 255, 0.4);
+        }
+
+        .progress-bar-fill-magenta {
+            background: linear-gradient(90deg, rgba(254, 0, 254, 0.5), rgba(254, 0, 254, 1));
+            box-shadow: 0 0 15px rgba(254, 0, 254, 0.8), inset 0 2px 4px rgba(255, 255, 255, 0.4);
+        }
+
+        .floating-bubble {
+            animation: float 6s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen relative overflow-hidden font-body-md">
+<!-- Immersive Background -->
+<div class="absolute inset-0 z-0">
+<div class="bg-cover bg-center w-full h-full absolute inset-0 opacity-80 mix-blend-screen" data-alt="A deep underwater or ethereal fluid background. Caustic light patterns dance across a dark teal and navy gradient. Large, glowing, out-of-focus spheres resembling pressurized air bubbles or soft jellyfish float through the space, casting subtle cyan and magenta illumination." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBSNzE-bF7LAFuQ3wHDyJLywaSXDvJouY5TYS1_MegFo_15NTOakoQ-5kN5n2lNyzFUJVmbd7NRYMBeyl3tOBIaDMXB8_DTl8jJIQXcVzJa6s1ghnznZKPy7wSStvkJm7CM22qptS6TLgYxHFBI4KdqjrLLPPR9pE75jegkT9ZkEClnoaZ15x8340W5IWFNeceo9qUNnwmY4Zp9QUW6B3N4rP80cykvR6UBhSO_Sw7BgXs3anFzaS-kLXMVgYh7_jUFHAmfPVBM38U')"></div>
+<div class="absolute inset-0 bg-gradient-to-b from-background/40 to-background/90 backdrop-blur-[2px]"></div>
+</div>
+<!-- Main Content Canvas -->
+<div class="relative z-10 min-h-screen flex flex-col items-center justify-center p-container-padding">
+<!-- Header Text -->
+<h1 class="font-display-lg md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary neon-text-primary mb-8 tracking-tighter text-center">
+            LEVEL CLEARED
+        </h1>
+<!-- Central Score Card -->
+<div class="glass-panel rounded-xl p-8 w-full max-w-md flex flex-col items-center relative floating-bubble">
+<!-- Decorative corner highlights -->
+<div class="absolute top-0 left-0 w-16 h-16 bg-gradient-to-br from-primary/20 to-transparent rounded-tl-xl pointer-events-none"></div>
+<div class="absolute bottom-0 right-0 w-16 h-16 bg-gradient-to-tl from-primary-container/20 to-transparent rounded-br-xl pointer-events-none"></div>
+<!-- Grade Bubble -->
+<div class="bubble-frame w-40 h-40 rounded-full flex items-center justify-center mb-8 relative z-20">
+<span class="font-display-lg text-[80px] font-extrabold text-tertiary-fixed neon-text-tertiary leading-none mt-2">S</span>
+<!-- Tiny floating accent bubbles -->
+<div class="absolute top-2 right-4 w-4 h-4 rounded-full bubble-frame opacity-60"></div>
+<div class="absolute bottom-4 left-6 w-6 h-6 rounded-full bubble-frame opacity-80"></div>
+</div>
+<!-- Score Number -->
+<div class="text-center mb-8 w-full">
+<p class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest mb-1">Total Score</p>
+<p class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary neon-text-primary">1,450,290</p>
+</div>
+<!-- Stats Container -->
+<div class="w-full flex flex-col gap-element-gap mb-8">
+<!-- Stat: Total Popped -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-end">
+<span class="font-label-bold text-label-bold text-on-surface-variant">Bubbles Popped</span>
+<span class="font-headline-md text-headline-md text-primary">842</span>
+</div>
+<div class="h-3 w-full rounded-full progress-bar-track overflow-hidden">
+<div class="h-full rounded-full progress-bar-fill-cyan w-[85%]"></div>
+</div>
+</div>
+<!-- Stat: Max Combo -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-end">
+<span class="font-label-bold text-label-bold text-on-surface-variant">Max Combo</span>
+<span class="font-headline-md text-headline-md text-secondary neon-text-secondary">x124</span>
+</div>
+<div class="h-3 w-full rounded-full progress-bar-track overflow-hidden">
+<div class="h-full rounded-full progress-bar-fill-magenta w-[92%]"></div>
+</div>
+</div>
+<!-- Stat: Accuracy -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-end">
+<span class="font-label-bold text-label-bold text-on-surface-variant">Accuracy</span>
+<span class="font-headline-md text-headline-md text-primary">98.5%</span>
+</div>
+<div class="h-3 w-full rounded-full progress-bar-track overflow-hidden">
+<div class="h-full rounded-full progress-bar-fill-cyan w-[98.5%]"></div>
+</div>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="w-full flex flex-col gap-4 mt-4">
+<button class="w-full glow-button-primary rounded-full py-4 px-6 flex items-center justify-center gap-2 group">
+<span class="material-symbols-outlined text-tertiary-fixed group-hover:animate-pulse">play_arrow</span>
+<span class="font-label-bold text-label-bold text-tertiary-fixed tracking-wider">PLAY AGAIN</span>
+</button>
+<button class="w-full glow-button-secondary rounded-full py-4 px-6 flex items-center justify-center gap-2 text-primary-fixed">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-label-bold text-label-bold tracking-wider">MAIN MENU</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

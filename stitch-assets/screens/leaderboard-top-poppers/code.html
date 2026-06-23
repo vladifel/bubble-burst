@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bubble Burst - Leaderboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;family=Be+Vietnam+Pro:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        .bubble-bg {
+            background: radial-gradient(circle at 50% 50%, #11131c 0%, #0c0e17 100%);
+            overflow: hidden;
+        }
+        .glass-panel {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.03);
+            box-shadow: 
+                inset 0 1px 1px rgba(255, 255, 255, 0.2),
+                0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+        .neon-border-cyan {
+            border: 1px solid rgba(0, 221, 221, 0.5);
+            box-shadow: 0 0 15px rgba(0, 221, 221, 0.2), inset 0 0 10px rgba(0, 221, 221, 0.1);
+        }
+        .neon-magenta-glow {
+            text-shadow: 0 0 10px rgba(254, 0, 254, 0.6);
+        }
+        .caustic-highlight {
+            background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 50%);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-variant": "#32343e",
+                      "surface-dim": "#11131c",
+                      "outline-variant": "#3a4a49",
+                      "on-primary-container": "#007070",
+                      "tertiary-fixed-dim": "#4ce346",
+                      "tertiary-container": "#75ff68",
+                      "surface-container-low": "#191b24",
+                      "tertiary-fixed": "#75ff68",
+                      "primary-fixed-dim": "#00dddd",
+                      "on-tertiary-fixed": "#002201",
+                      "on-tertiary": "#003a03",
+                      "on-primary-fixed-variant": "#004f4f",
+                      "surface-tint": "#00dddd",
+                      "inverse-on-surface": "#2e303a",
+                      "on-tertiary-fixed-variant": "#005306",
+                      "on-surface": "#e1e1ef",
+                      "error": "#ffb4ab",
+                      "secondary": "#ffabf3",
+                      "surface-container": "#1d1f29",
+                      "on-secondary-container": "#500050",
+                      "outline": "#839493",
+                      "inverse-surface": "#e1e1ef",
+                      "primary-fixed": "#00fbfb",
+                      "secondary-fixed-dim": "#ffabf3",
+                      "on-surface-variant": "#b9cac9",
+                      "on-secondary-fixed-variant": "#810081",
+                      "surface-container-lowest": "#0c0e17",
+                      "primary-container": "#00fbfb",
+                      "on-primary-fixed": "#002020",
+                      "surface-container-highest": "#32343e",
+                      "secondary-fixed": "#ffd7f5",
+                      "on-primary": "#003737",
+                      "on-error": "#690005",
+                      "surface-container-high": "#282933",
+                      "inverse-primary": "#006a6a",
+                      "secondary-container": "#fe00fe",
+                      "on-error-container": "#ffdad6",
+                      "on-secondary": "#5b005b",
+                      "on-tertiary-container": "#00750c",
+                      "primary": "#ffffff",
+                      "background": "#11131c",
+                      "on-background": "#e1e1ef",
+                      "error-container": "#93000a",
+                      "surface-bright": "#373943",
+                      "on-secondary-fixed": "#380038",
+                      "tertiary": "#ffffff",
+                      "surface": "#11131c"
+              },
+              "borderRadius": {
+                      "DEFAULT": "1rem",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "16px",
+                      "unit": "8px",
+                      "element-gap": "12px",
+                      "container-padding": "24px"
+              },
+              "fontFamily": {
+                      "body-md": ["Plus Jakarta Sans"],
+                      "headline-md": ["Plus Jakarta Sans"],
+                      "body-lg": ["Plus Jakarta Sans"],
+                      "display-lg": ["Plus Jakarta Sans"],
+                      "label-bold": ["Be Vietnam Pro"],
+                      "display-lg-mobile": ["Plus Jakarta Sans"]
+              },
+              "fontSize": {
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "500"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                      "label-bold": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                      "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "800"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-primary-fixed-dim/30 bubble-bg min-h-screen">
+<!-- Ambient Animated Background Layer -->
+<div class="fixed inset-0 pointer-events-none opacity-40">
+
+</div>
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface-dim/40 backdrop-blur-xl border-b border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] flex justify-between items-center px-container-padding h-20">
+<div class="flex items-center gap-4">
+<span class="font-display-lg-mobile text-display-lg-mobile tracking-tighter text-primary drop-shadow-[0_0_10px_rgba(0,221,221,0.5)]">BUBBLE BURST</span>
+</div>
+<div class="flex items-center gap-6">
+<button class="material-symbols-outlined text-primary hover:scale-105 transition-transform duration-200 active:scale-95" data-icon="help">help</button>
+<button class="material-symbols-outlined text-primary hover:scale-105 transition-transform duration-200 active:scale-95" data-icon="settings">settings</button>
+<div class="w-10 h-10 rounded-full border-2 border-primary-fixed shadow-[0_0_10px_rgba(0,221,221,0.5)] overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A high-quality 3D rendered character avatar for a gaming profile. The character has a friendly expression and is wearing glowing cyan headphones. The aesthetic is glossy, toy-like, and semi-transparent with a vibrant color palette of teal and deep navy backgrounds, fitting the Bubble Burst Simulator theme." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUqky5jfXz_fYUZZgdbUWZ901HUw7cup7KRrXr8bol4Wy7uTndAQGiQh6-Jnyb5N5LAHmuj3o8jvgLFrDQgFnxWvO_oVj9eGqnNZp2YKynfI3G5Ej1w2rWuMo6Sxu445GmMljhFnb0lGo893qj_BynJotp_-1xsAo7JE10GGnylEiJw-LQ4LciO7xOuSyUTIFrfvZ1vID8-8Zedv4Jtrnlw80cbfnWNEArbTg-ZljKh31xi6MPZ-f_MvydGE5XYraNyfzX29oNP7k"/>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="pt-28 pb-32 px-container-padding relative z-10 max-w-4xl mx-auto">
+<!-- Header Section -->
+<header class="text-center mb-10">
+<h1 class="font-display-lg text-display-lg text-primary mb-2 tracking-tighter neon-magenta-glow">Top Poppers</h1>
+<p class="font-body-lg text-on-surface-variant max-w-lg mx-auto">Rise through the ranks and become the ultimate bubble master.</p>
+</header>
+<!-- Toggle Switch -->
+<div class="flex justify-center mb-12">
+<div class="p-1 glass-panel rounded-full flex gap-1 border border-white/10">
+<button class="px-8 py-3 rounded-full font-label-bold text-label-bold transition-all duration-300 bg-primary-container text-on-primary-container shadow-[0_0_15px_rgba(0,251,251,0.4)]">Blitz</button>
+<button class="px-8 py-3 rounded-full font-label-bold text-label-bold transition-all duration-300 text-on-surface-variant hover:bg-white/5">Zen</button>
+</div>
+</div>
+<!-- Leaderboard Table -->
+<div class="glass-panel rounded-lg overflow-hidden border border-white/10 mb-8 relative">
+<div class="caustic-highlight absolute inset-0 pointer-events-none"></div>
+<!-- Table Header -->
+<div class="grid grid-cols-12 gap-4 px-6 py-4 border-b border-white/10 text-on-surface-variant font-label-bold text-label-bold uppercase tracking-widest opacity-60">
+<div class="col-span-2">Rank</div>
+<div class="col-span-5">Player</div>
+<div class="col-span-3 text-right">Total Popped</div>
+<div class="col-span-2 text-right">High Score</div>
+</div>
+<!-- Scrollable Rankings -->
+<div class="max-h-[500px] overflow-y-auto custom-scrollbar">
+<!-- Rank 1 -->
+<div class="grid grid-cols-12 gap-4 px-6 py-5 items-center hover:bg-white/5 transition-colors border-b border-white/5">
+<div class="col-span-2 flex items-center">
+<span class="material-symbols-outlined text-yellow-400 text-3xl drop-shadow-[0_0_8px_rgba(250,204,21,0.5)]" data-icon="emoji_events" style="font-variation-settings: 'FILL' 1;">emoji_events</span>
+</div>
+<div class="col-span-5 flex items-center gap-3">
+<div class="w-10 h-10 rounded-full border-2 border-secondary p-0.5">
+<img class="w-full h-full rounded-full object-cover" data-alt="A stylized 3D avatar of a futuristic player with magenta glowing hair and large expressive eyes. The skin has a polished pearlescent finish, and the character is set against a dark teal background with floating air bubbles, maintaining the high-energy gaming aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQaYvgNXm4GsOGIrZuG6fs7nhY1WOtpRhyMkd5_JbYAxm7y2hsqL6RmursaB2DycIWOj6xDjUNq8kfimPx25k4jEfLc7VKoQa11FS_lboxpQdczPnNnDNyQqXOfF0efnD0HXWJaz8Tqb8pb-NXqEOpQKJnmRrUfjfcunRPLySVdXEfP0uI1Pj-jc8MKHoszfQUxdj0VB5-rGfDGeCdb8A2zioNYCJ3Pghpq3-bZiV5U2g6bSiuIhrtbI3EW-2JRWDSBmJYdrXPym0"/>
+</div>
+<span class="font-headline-md text-primary text-lg">NeonNova</span>
+</div>
+<div class="col-span-3 text-right font-headline-md text-primary text-lg">1,240,580</div>
+<div class="col-span-2 text-right font-body-md text-secondary-fixed-dim">98,400</div>
+</div>
+<!-- Rank 2 -->
+<div class="grid grid-cols-12 gap-4 px-6 py-5 items-center hover:bg-white/5 transition-colors border-b border-white/5">
+<div class="col-span-2 flex items-center">
+<span class="material-symbols-outlined text-slate-300 text-3xl drop-shadow-[0_0_8px_rgba(203,213,225,0.5)]" data-icon="emoji_events" style="font-variation-settings: 'FILL' 1;">emoji_events</span>
+</div>
+<div class="col-span-5 flex items-center gap-3">
+<div class="w-10 h-10 rounded-full border-2 border-primary-fixed p-0.5">
+<img class="w-full h-full rounded-full object-cover" data-alt="A 3D character profile picture featuring a robot-like figure with glowing cyan optical sensors and sleek chrome plating. The background is a dense navy blue void filled with colorful, translucent bubble spheres that reflect light. The overall mood is high-tech and vibrant." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBG0DI2TT0Gp_jR6wq2s_z-JwkGp7kGPyyqlBfPJ3C7Mtxh5S7rP72naNeqMEFV0pkE1ADr6OG6wy8tSL3iShg6GrGc1O8KPcgv_5VeLnjpP3w5CXDS8Ifk8NB_yhIYuy0j3zvJ9FLP-8ZNKrbM6c40BhlW6euiTXcepqW8Cb90fRDe6uWfaoXDvo_bQsyI6JT8ewERbPBPGmM3WaMSE0_Zvxq9MZz_igilf2spYvqp8mYZ78tGx6_3Mg6ooxSBXSNvneZeI7vLfG4"/>
+</div>
+<span class="font-headline-md text-primary text-lg">BlitzKing</span>
+</div>
+<div class="col-span-3 text-right font-headline-md text-primary text-lg">982,100</div>
+<div class="col-span-2 text-right font-body-md text-secondary-fixed-dim">84,120</div>
+</div>
+<!-- Rank 3 -->
+<div class="grid grid-cols-12 gap-4 px-6 py-5 items-center hover:bg-white/5 transition-colors border-b border-white/5">
+<div class="col-span-2 flex items-center">
+<span class="material-symbols-outlined text-orange-400 text-3xl drop-shadow-[0_0_8px_rgba(251,146,60,0.5)]" data-icon="emoji_events" style="font-variation-settings: 'FILL' 1;">emoji_events</span>
+</div>
+<div class="col-span-5 flex items-center gap-3">
+<div class="w-10 h-10 rounded-full border-2 border-tertiary-fixed p-0.5">
+<img class="w-full h-full rounded-full object-cover" data-alt="A portrait of a youthful game character with lime green futuristic glasses and a sleek dark jumpsuit. The character is illuminated by a cool cyan rim light, floating in a dark aquatic environment filled with bubbles of different sizes and glowing particles." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZIiBeNAmoV44TFEXlrmx4rwv8BvP5xYXVlJlBD9IXtgUamPm8uu1KpjMw6UNWj6JvUQGSZ-MBrHKW7CHcg9LL7kgUAoomYJveGB4SQ2vOelGIE91vkDwbaHlQeq7-rq8o633szX5y5p_dktQ0oz6BjplZxXXveAf0PcQNxXVrk6X-D0DSQ-WWHdt7rW5PYaJKvZpdj-j2c2ZdtrjTW1vEKnOGpJ2PQdmVyBtb9FHjvgmchlGtpyDkstGbMAcY-5Deh5QH8X2rK1U"/>
+</div>
+<span class="font-headline-md text-primary text-lg">EchoPopper</span>
+</div>
+<div class="col-span-3 text-right font-headline-md text-primary text-lg">845,300</div>
+<div class="col-span-2 text-right font-body-md text-secondary-fixed-dim">79,900</div>
+</div>
+<!-- Rank 4-10 (Sample data) -->
+<div class="grid grid-cols-12 gap-4 px-6 py-5 items-center hover:bg-white/5 transition-colors border-b border-white/5 opacity-80">
+<div class="col-span-2 font-label-bold text-on-surface-variant text-xl pl-2">#4</div>
+<div class="col-span-5 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-high"></div>
+<span class="font-body-lg text-on-surface">BubbleTrouble</span>
+</div>
+<div class="col-span-3 text-right font-body-lg text-on-surface">712,040</div>
+<div class="col-span-2 text-right font-body-md text-on-surface-variant">62,500</div>
+</div>
+<div class="grid grid-cols-12 gap-4 px-6 py-5 items-center hover:bg-white/5 transition-colors border-b border-white/5 opacity-80">
+<div class="col-span-2 font-label-bold text-on-surface-variant text-xl pl-2">#5</div>
+<div class="col-span-5 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-high"></div>
+<span class="font-body-lg text-on-surface">AquaDash</span>
+</div>
+<div class="col-span-3 text-right font-body-lg text-on-surface">654,900</div>
+<div class="col-span-2 text-right font-body-md text-on-surface-variant">58,200</div>
+</div>
+<div class="grid grid-cols-12 gap-4 px-6 py-5 items-center hover:bg-white/5 transition-colors border-b border-white/5 opacity-80">
+<div class="col-span-2 font-label-bold text-on-surface-variant text-xl pl-2">#6</div>
+<div class="col-span-5 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-high"></div>
+<span class="font-body-lg text-on-surface">PrismBurst</span>
+</div>
+<div class="col-span-3 text-right font-body-lg text-on-surface">632,150</div>
+<div class="col-span-2 text-right font-body-md text-on-surface-variant">55,900</div>
+</div>
+</div>
+</div>
+<!-- User Highlight Fixed Row -->
+<div class="glass-panel rounded-full neon-border-cyan grid grid-cols-12 gap-4 px-8 py-5 items-center relative overflow-hidden">
+<div class="absolute inset-0 bg-primary/5"></div>
+<div class="col-span-2 flex items-center gap-2">
+<span class="font-label-bold text-primary-fixed-dim text-xl">#42</span>
+<span class="material-symbols-outlined text-primary-fixed-dim text-sm" data-icon="trending_up">trending_up</span>
+</div>
+<div class="col-span-5 flex items-center gap-3">
+<div class="w-10 h-10 rounded-full border-2 border-primary shadow-[0_0_10px_rgba(255,255,255,0.4)] overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A 3D gaming avatar representing the user, showing a playful character with neon cyan glowing features and an energetic expression. Surrounded by a soft holographic aura, the character is depicted in a high-gloss, liquid-plastic style typical of the Bubble Burst Simulator theme." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcr-gPt4Etr0KhuDIH5Ck-OXmUkY8PGJmIloODMygMFuvelfwhque2H4pMUfcGu9EBcO2M3h5kKXt_cvtElGUfUaF3e1rHeREiXI-9JHp4_AUBO8tj_cEh_Pc17MgN9-d8opjEbY_7hVnqp44zK9g7vRLrIvMEjDeaR7xnW3dXAefR9g5CmBObz95TPpNP9jN3_OuQqLBSy-aG4Y4ZcVP-LJz5Rmy8-6HhXc6grK8AbkIhlgs2XJV2UY1a4CSl-72Mncnlnn30gCU"/>
+</div>
+<span class="font-headline-md text-primary text-lg">PlayerOne (You)</span>
+</div>
+<div class="col-span-3 text-right font-headline-md text-primary-fixed-dim text-lg">145,200</div>
+<div class="col-span-2 text-right font-body-md text-on-surface-variant">12,450</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<div class="fixed bottom-0 w-full px-6 pb-8 z-50 flex justify-around items-center h-24">
+<div class="fixed bottom-6 left-6 right-6 rounded-full overflow-hidden bg-surface-container-lowest/60 backdrop-blur-2xl border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.5),inset_0_0_20px_rgba(0,221,221,0.1)] flex justify-around items-center h-20 px-8">
+<button class="flex flex-col items-center justify-center text-on-surface-variant/70 hover:text-primary transition-colors active:scale-90 transition-all duration-300 ease-out">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-bold text-[10px] mt-1">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant/70 hover:text-primary transition-colors active:scale-90 transition-all duration-300 ease-out">
+<span class="material-symbols-outlined" data-icon="spa">spa</span>
+<span class="font-label-bold text-[10px] mt-1">Zen</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant/70 hover:text-primary transition-colors active:scale-90 transition-all duration-300 ease-out">
+<span class="material-symbols-outlined" data-icon="bolt">bolt</span>
+<span class="font-label-bold text-[10px] mt-1">Blitz</span>
+</button>
+<!-- Active Navigation: Awards (Leaderboard maps closest to Awards/Rankings) -->
+<button class="flex flex-col items-center justify-center bg-primary text-on-primary rounded-full px-6 py-2 shadow-[0_0_15px_rgba(0,251,251,0.4)] active:scale-90 transition-all duration-300 ease-out">
+<span class="material-symbols-outlined" data-icon="emoji_events" style="font-variation-settings: 'FILL' 1;">emoji_events</span>
+<span class="font-label-bold text-[10px] mt-1">Awards</span>
+</button>
+</div>
+</div>
+<!-- Background Bubble Particles -->
+<div class="fixed inset-0 pointer-events-none z-0">
+<div class="absolute w-24 h-24 bg-primary-fixed-dim/10 rounded-full blur-2xl" style="top: 20%; left: 10%; animation: float 12s infinite ease-in-out;"></div>
+<div class="absolute w-40 h-40 bg-secondary/10 rounded-full blur-3xl" style="top: 60%; right: 5%; animation: float 18s infinite ease-in-out reverse;"></div>
+<div class="absolute w-32 h-32 bg-on-primary-container/10 rounded-full blur-2xl" style="bottom: 15%; left: 20%; animation: float 15s infinite ease-in-out 2s;"></div>
+</div>
+<script>
+        // Micro-interactions for buttons
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('mousedown', () => {
+                btn.style.transform = 'scale(0.95)';
+            });
+            btn.addEventListener('mouseup', () => {
+                btn.style.transform = 'scale(1)';
+            });
+        });
+
+        // Toggle Leaderboard Logic
+        const tabs = document.querySelectorAll('.rounded-full.flex.gap-1 button');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => {
+                    t.classList.remove('bg-primary-container', 'text-on-primary-container', 'shadow-[0_0_15px_rgba(0,251,251,0.4)]');
+                    t.classList.add('text-on-surface-variant', 'hover:bg-white/5');
+                });
+                tab.classList.remove('text-on-surface-variant', 'hover:bg-white/5');
+                tab.classList.add('bg-primary-container', 'text-on-primary-container', 'shadow-[0_0_15px_rgba(0,251,251,0.4)]');
+            });
+        });
+    </script>
+</body></html>

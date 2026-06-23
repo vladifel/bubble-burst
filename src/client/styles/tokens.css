@@ -1,0 +1,30 @@
+:root {
+  --color-background: #11131c;
+  --color-surface: #11131c;
+  --color-on-surface: #e1e1ef;
+  --color-on-surface-variant: #b9cac9;
+  --color-primary: #ffffff;
+  --color-primary-fixed: #00fbfb;
+  --color-primary-container: #00fbfb;
+  --color-on-primary-container: #007070;
+  --color-secondary: #ffabf3;
+  --color-secondary-container: #fe00fe;
+  --color-tertiary-fixed: #75ff68;
+  --color-tertiary-container: #75ff68;
+  --color-surface-container: #1d1f29;
+  --color-surface-container-highest: #32343e;
+  --color-surface-container-low: #191b24;
+  --color-outline-variant: #3a4a49;
+  --radius-md: 1rem;
+  --radius-lg: 2rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2.5rem;
+  --radius-3xl: 3rem;
+  --radius-full: 9999px;
+  --space-container: 24px;
+  --space-gutter: 16px;
+  --space-node-gap: 8px;
+  --space-element-gap: 12px;
+  --font-display: 'Plus Jakarta Sans', 'Quicksand', system-ui, sans-serif;
+  --font-label: 'Be Vietnam Pro', 'Quicksand', system-ui, sans-serif;
+}

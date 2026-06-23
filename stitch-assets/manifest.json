@@ -1,0 +1,229 @@
+{
+  "projectId": "6637312887400384403",
+  "projectTitle": "Bubble Burst Design Blueprint",
+  "fetchedAt": "2026-06-23",
+  "screens": [
+    {
+      "id": "assets_5d36185a44d24c00ab38ea606a27688c",
+      "title": "Design System",
+      "type": "DESIGN_SYSTEM_INSTANCE",
+      "files": {
+        "preview": "design-system/preview.png",
+        "designMd": "design-system/design.md"
+      }
+    },
+    {
+      "id": "3a580e6b673441388864aace92643453",
+      "title": "Abstract background",
+      "files": {
+        "screenshot": "screens/background/screenshot.png"
+      }
+    },
+    {
+      "id": "8589afd9ee934e10bd4f62f2125a1d0b",
+      "title": "Realistic Bubble Asset",
+      "files": {
+        "screenshot": "screens/bubble-asset/screenshot.png",
+        "code": "screens/bubble-asset/code.svg"
+      }
+    },
+    {
+      "id": "39e2bd3e4bdc4d2a870ec226089fabc9",
+      "title": "Gameplay Area - Electric Tactility",
+      "files": {
+        "screenshot": "screens/gameplay/screenshot.png",
+        "code": "screens/gameplay/code.html"
+      }
+    },
+    {
+      "id": "0fafd5c1dc5c45c6be0717ef9370cb15",
+      "title": "Results Screen - Electric Tactility",
+      "files": {
+        "screenshot": "screens/results/screenshot.png",
+        "code": "screens/results/code.html"
+      }
+    },
+    {
+      "id": "742e2daf755641d68fdaece839f94117",
+      "title": "Bubble Burst Simulator Game Icon",
+      "files": {
+        "screenshot": "screens/app-icon/screenshot.png",
+        "appIcon": "../assets/icon.png"
+      }
+    },
+    {
+      "id": "96fc4828b48949518f795af15c590e89",
+      "title": "Home Gate - Electric Tactility",
+      "files": {
+        "screenshot": "screens/home-gate/screenshot.png",
+        "code": "screens/home-gate/code.html"
+      }
+    },
+    {
+      "id": "7fb48999ff554321ba57954ad1a468a6",
+      "title": "Zen Mode - Desktop",
+      "deviceType": "DESKTOP",
+      "dimensions": "2632x2442",
+      "files": {
+        "screenshot": "screens/zen-mode-desktop/screenshot.png",
+        "code": "screens/zen-mode-desktop/code.html"
+      }
+    },
+    {
+      "id": "00174ca023d74bcc922d09fcb8210ec8",
+      "title": "Blitz Mode - Desktop",
+      "deviceType": "DESKTOP",
+      "dimensions": "2560x2048",
+      "files": {
+        "screenshot": "screens/blitz-mode-desktop/screenshot.png",
+        "code": "screens/blitz-mode-desktop/code.html"
+      }
+    },
+    {
+      "id": "f963bb8ba332446e974706a6896d8733",
+      "title": "Settings Overlay - Desktop",
+      "deviceType": "DESKTOP",
+      "dimensions": "2720x2208",
+      "files": {
+        "screenshot": "screens/settings-overlay-desktop/screenshot.png",
+        "code": "screens/settings-overlay-desktop/code.html"
+      }
+    },
+    {
+      "id": "0972109e7b30461f8b36c070e251ca13",
+      "title": "Zen Mode - Mobile",
+      "deviceType": "MOBILE",
+      "dimensions": "780x1768",
+      "files": {
+        "screenshot": "screens/zen-mode-mobile/screenshot.png",
+        "code": "screens/zen-mode-mobile/code.html"
+      }
+    },
+    {
+      "id": "0b4de1fbaeaa4def92400b756f6118fa",
+      "title": "Blitz Mode - Mobile",
+      "deviceType": "MOBILE",
+      "dimensions": "780x1768",
+      "files": {
+        "screenshot": "screens/blitz-mode-mobile/screenshot.png",
+        "code": "screens/blitz-mode-mobile/code.html"
+      }
+    },
+    {
+      "id": "371f0693a80d48e8a9670bac5669c1b0",
+      "title": "Shader",
+      "dimensions": "512x512",
+      "files": {
+        "code": "screens/shader/code.html"
+      }
+    },
+    {
+      "id": "d3c30386060b45aebb3f2a81e2e423f3",
+      "title": "Three.js",
+      "dimensions": "512x512",
+      "files": {
+        "code": "screens/threejs/code.html"
+      }
+    },
+    {
+      "id": "5a331401a73848e0be4e00e5e4218da7",
+      "title": "Scoreboard - My Stats",
+      "deviceType": "DESKTOP",
+      "dimensions": "2560x3058",
+      "files": {
+        "screenshot": "screens/scoreboard-my-stats/screenshot.png",
+        "code": "screens/scoreboard-my-stats/code.html"
+      }
+    },
+    {
+      "id": "a31404083a6c4e2ca4ecedfbfd9f8263",
+      "title": "Leaderboard - Top Poppers",
+      "deviceType": "DESKTOP",
+      "dimensions": "2560x2202",
+      "files": {
+        "screenshot": "screens/leaderboard-top-poppers/screenshot.png",
+        "code": "screens/leaderboard-top-poppers/code.html"
+      }
+    },
+    {
+      "id": "cb797b813aa841c9914e3b845fc1bf4d",
+      "title": "Home Gate - Desktop",
+      "deviceType": "DESKTOP",
+      "dimensions": "2560x2048",
+      "files": {
+        "screenshot": "screens/home-gate-desktop/screenshot.png",
+        "code": "screens/home-gate-desktop/code.html"
+      }
+    },
+    {
+      "id": "e2048921d977464ab481aa18174b6523",
+      "title": "Home Gate - Mobile",
+      "deviceType": "MOBILE",
+      "dimensions": "780x1768",
+      "files": {
+        "screenshot": "screens/home-gate-mobile/screenshot.png",
+        "code": "screens/home-gate-mobile/code.html"
+      }
+    },
+    {
+      "id": "8c4b8ea17e374dd682f914ceae118863",
+      "title": "Home Gate - Desktop (Devvit Fixed)",
+      "deviceType": "DESKTOP",
+      "dimensions": "800x512",
+      "files": {
+        "screenshot": "screens/home-gate-desktop-devvit/screenshot.png",
+        "code": "screens/home-gate-desktop-devvit/code.html"
+      }
+    },
+    {
+      "id": "a9624c38905249a1bbbe15cb01b7e1ce",
+      "title": "Home Gate - Mobile (Devvit Fixed)",
+      "deviceType": "MOBILE",
+      "dimensions": "512x512",
+      "files": {
+        "screenshot": "screens/home-gate-mobile-devvit/screenshot.png",
+        "code": "screens/home-gate-mobile-devvit/code.html"
+      }
+    },
+    {
+      "id": "d444f26b0f20491b9b04ddf739eb065d",
+      "title": "Home Gate - Desktop (Perfectly Aligned)",
+      "deviceType": "DESKTOP",
+      "dimensions": "800x512",
+      "files": {
+        "screenshot": "screens/home-gate-desktop-aligned/screenshot.png",
+        "code": "screens/home-gate-desktop-aligned/code.html"
+      }
+    },
+    {
+      "id": "40d646b7eff84014a6796d97bc4b1a99",
+      "title": "Home Gate - Mobile (Perfectly Aligned)",
+      "deviceType": "MOBILE",
+      "dimensions": "512x512",
+      "files": {
+        "screenshot": "screens/home-gate-mobile-aligned/screenshot.png",
+        "code": "screens/home-gate-mobile-aligned/code.html"
+      }
+    },
+    {
+      "id": "46327c53932d431c9143b0d4772c8c55",
+      "title": "Scoreboard - Desktop (with Back)",
+      "deviceType": "DESKTOP",
+      "dimensions": "2560x2802",
+      "files": {
+        "screenshot": "screens/scoreboard-desktop-back/screenshot.png",
+        "code": "screens/scoreboard-desktop-back/code.html"
+      }
+    },
+    {
+      "id": "3225ae72fcb0411baa2177e64405ef9e",
+      "title": "Scoreboard - Mobile (Electric Tactility)",
+      "deviceType": "MOBILE",
+      "dimensions": "780x2502",
+      "files": {
+        "screenshot": "screens/scoreboard-mobile-electric/screenshot.png",
+        "code": "screens/scoreboard-mobile-electric/code.html"
+      }
+    }
+  ]
+}

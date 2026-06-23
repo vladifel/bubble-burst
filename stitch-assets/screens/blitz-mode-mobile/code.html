@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Bubble Burst Simulator - Blitz Mode</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;family=Be+Vietnam+Pro:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "error": "#ffb4ab",
+                "surface-container": "#1d1f29",
+                "on-primary-fixed": "#002020",
+                "tertiary-container": "#75ff68",
+                "surface-container-highest": "#32343e",
+                "outline": "#839493",
+                "on-tertiary-fixed-variant": "#005306",
+                "inverse-primary": "#006a6a",
+                "surface": "#11131c",
+                "on-tertiary": "#003a03",
+                "secondary-fixed": "#ffd7f5",
+                "surface-container-lowest": "#0c0e17",
+                "surface-container-high": "#282933",
+                "outline-variant": "#3a4a49",
+                "tertiary": "#ffffff",
+                "inverse-surface": "#e1e1ef",
+                "surface-tint": "#00dddd",
+                "surface-bright": "#373943",
+                "on-surface": "#e1e1ef",
+                "secondary-container": "#fe00fe",
+                "tertiary-fixed": "#75ff68",
+                "surface-container-low": "#191b24",
+                "primary-fixed-dim": "#00dddd",
+                "on-background": "#e1e1ef",
+                "tertiary-fixed-dim": "#4ce346",
+                "on-secondary-container": "#500050",
+                "surface-dim": "#11131c",
+                "on-tertiary-container": "#00750c",
+                "on-secondary": "#5b005b",
+                "secondary-fixed-dim": "#ffabf3",
+                "on-surface-variant": "#b9cac9",
+                "on-secondary-fixed-variant": "#810081",
+                "primary-container": "#00fbfb",
+                "on-primary-container": "#007070",
+                "surface-variant": "#32343e",
+                "primary": "#ffffff",
+                "on-primary-fixed-variant": "#004f4f",
+                "on-error": "#690005",
+                "on-tertiary-fixed": "#002201",
+                "on-error-container": "#ffdad6",
+                "inverse-on-surface": "#2e303a",
+                "error-container": "#93000a",
+                "background": "#11131c",
+                "primary-fixed": "#00fbfb",
+                "on-secondary-fixed": "#380038",
+                "secondary": "#ffabf3",
+                "on-primary": "#003737"
+            },
+            "borderRadius": {
+                "DEFAULT": "1rem",
+                "lg": "2rem",
+                "xl": "3rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "container-padding": "24px",
+                "unit": "8px",
+                "gutter": "16px",
+                "element-gap": "12px"
+            },
+            "fontFamily": {
+                "headline-md": ["Plus Jakarta Sans"],
+                "display-lg-mobile": ["Plus Jakarta Sans"],
+                "label-bold": ["Be Vietnam Pro"],
+                "display-lg": ["Plus Jakarta Sans"],
+                "body-md": ["Plus Jakarta Sans"],
+                "body-lg": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                "label-bold": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "500"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .glass-vessel {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.1), 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .caustic-highlight {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, transparent 40%, transparent 60%, rgba(0,0,0,0.1) 100%);
+            border-radius: inherit;
+        }
+
+        .bubble-pop {
+            animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.8; filter: brightness(1.5); }
+            100% { transform: scale(0); opacity: 0; }
+        }
+
+        .liquid-glow {
+            box-shadow: inset 0 0 20px rgba(0, 251, 251, 0.3);
+        }
+
+        .neon-text-glow {
+            text-shadow: 0 0 10px rgba(0, 251, 251, 0.6);
+        }
+
+        body {
+            overscroll-behavior-y: contain;
+            overflow: hidden;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background h-screen font-body-md">
+<!-- Background Layer -->
+<div class="fixed inset-0 z-0">
+<div class="absolute inset-0 bg-gradient-to-br from-surface-container-lowest via-surface to-background"></div>
+
+<!-- Ambient Floating Bubbles -->
+<div class="absolute top-20 left-10 w-32 h-32 rounded-full glass-vessel blur-md opacity-20 animate-pulse"></div>
+<div class="absolute bottom-40 right-5 w-48 h-48 rounded-full glass-vessel blur-lg opacity-10 animate-bounce" style="animation-duration: 8s;"></div>
+</div>
+<!-- TopNavBar (Shared Component Identity) -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-container-padding py-unit backdrop-blur-xl border-b border-white/20 bg-surface/10 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.3)] h-16">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-fixed-dim text-3xl drop-shadow-[0_0_8px_rgba(0,221,221,0.4)]" data-icon="bubble_chart">bubble_chart</span>
+<h1 class="text-headline-md font-black text-primary-fixed-dim drop-shadow-[0_0_8px_rgba(0,221,221,0.4)] tracking-tight">Bubble Burst Simulator</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full glass-vessel active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-primary" data-icon="settings">settings</span>
+</button>
+</header>
+<!-- Game HUD -->
+<section class="fixed top-20 left-0 w-full px-container-padding z-40 flex flex-col gap-4">
+<div class="flex justify-between items-center w-full gap-4">
+<!-- Score Card -->
+<div class="flex-1 glass-vessel rounded-lg px-4 py-2 flex flex-col items-center justify-center relative overflow-hidden">
+<div class="caustic-highlight"></div>
+<span class="text-label-bold font-label-bold text-on-surface-variant uppercase tracking-widest text-[10px]">Score</span>
+<span class="text-headline-md font-headline-md text-primary-fixed neon-text-glow" id="score">12,450</span>
+</div>
+<!-- Timer Card -->
+<div class="flex-1 glass-vessel rounded-lg px-4 py-2 flex flex-col items-center justify-center relative overflow-hidden border-primary-fixed/30">
+<div class="caustic-highlight"></div>
+<span class="text-label-bold font-label-bold text-on-surface-variant uppercase tracking-widest text-[10px]">Timer</span>
+<span class="text-headline-md font-headline-md text-secondary-fixed" id="timer">0:48</span>
+</div>
+</div>
+<!-- Combo Bar -->
+<div class="w-full glass-vessel rounded-full h-8 px-1 flex items-center gap-2 relative overflow-hidden">
+<div class="caustic-highlight"></div>
+<div class="h-4 bg-gradient-to-r from-primary-fixed via-secondary-container to-tertiary-fixed w-[65%] rounded-full shadow-[0_0_12px_rgba(0,251,251,0.5)] transition-all duration-500"></div>
+<span class="absolute right-4 text-label-bold font-label-bold text-primary italic text-xs neon-text-glow">COMBO X5</span>
+</div>
+</section>
+<!-- Gameplay Area: 5x5 Grid -->
+<main class="relative z-10 w-full h-full flex items-center justify-center pt-48 pb-20 px-4">
+<div class="grid grid-cols-5 gap-3 w-full max-w-sm aspect-square p-4 glass-vessel rounded-lg relative">
+<div class="caustic-highlight opacity-30"></div>
+<!-- 25 Bubble slots -->
+<script>
+                const colors = ['bg-primary-container', 'bg-secondary-container', 'bg-tertiary-container', 'bg-primary-fixed-dim', 'bg-secondary-fixed-dim'];
+                const glowColors = ['rgba(0, 251, 251, 0.4)', 'rgba(254, 0, 254, 0.4)', 'rgba(117, 255, 104, 0.4)', 'rgba(0, 221, 221, 0.4)', 'rgba(255, 171, 243, 0.4)'];
+                
+                for(let i=0; i<25; i++) {
+                    const colorIndex = Math.floor(Math.random() * colors.length);
+                    const color = colors[colorIndex];
+                    const glow = glowColors[colorIndex];
+                    document.write(`
+                        <button onclick="popBubble(this)" class="relative group aspect-square flex items-center justify-center active:scale-95 transition-transform">
+                            <div class="w-full h-full rounded-full ${color} shadow-lg relative overflow-hidden transition-all duration-300 group-hover:scale-105" 
+                                 style="box-shadow: 0 0 15px ${glow}, inset 0 4px 8px rgba(255,255,255,0.6), inset 0 -4px 8px rgba(0,0,0,0.3)">
+                                <div class="absolute top-[15%] left-[15%] w-[30%] h-[20%] bg-white/60 rounded-full blur-[1px] rotate-[-45deg]"></div>
+                                <div class="absolute bottom-[20%] right-[20%] w-[15%] h-[15%] bg-white/20 rounded-full blur-[1px]"></div>
+                            </div>
+                        </button>
+                    `);
+                }
+
+                function popBubble(el) {
+                    el.classList.add('bubble-pop');
+                    setTimeout(() => {
+                        el.style.visibility = 'hidden';
+                    }, 300);
+                }
+            </script>
+</div>
+</main>
+<!-- BottomNavBar (Shared Component) -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-gutter py-4 backdrop-blur-2xl border-t border-white/10 bg-surface-container-lowest/30 rounded-t-xl shadow-[0_-4px_24px_rgba(0,0,0,0.5)]">
+<!-- Home -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:opacity-100 transition-opacity active:scale-95 duration-75" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="home">home</span>
+<span class="text-label-bold font-label-bold">Home</span>
+</a>
+<!-- Burst (Active) -->
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-6 py-2 shadow-[0_0_15px_rgba(0,251,251,0.4)] active:scale-95 duration-75" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="bubble_chart">bubble_chart</span>
+<span class="text-label-bold font-label-bold">Burst</span>
+</a>
+</nav>
+<!-- Background Decoration -->
+<div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-screen h-screen pointer-events-none z-[-1] opacity-30">
+<img class="w-full h-full object-cover" data-alt="A macro close-up of vibrant digital bubbles with hyper-realistic glass textures, reflecting neon cyan and magenta lights in a dark underwater-like atmosphere. High-gloss caustic light patterns shimmer across the curved surfaces. The aesthetic is futuristic gaming UI with deep spatial depth and refractive distortions." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxOx0cp36Jw9Ti74FJjVwya0HMywZdmGgh7Wzu07GEHvME_75Sl0qH1g5tvYSwZYEy7xrOXqssCtnjbvPyJUSVMmj3fW5S4njqWXNcf4SXgI7YvjONtLct41-6FVE7544qXZVYQLsawcYOmTNqI236lkhkBVEPPpf8pBh9ddAQv_aqqxTU_p5iWHdHCMwikFyuZpSiDO-4l_S3qV740kcD8vqEoJgDPX-TAsEpPynUMaf3TZj4ktCgnGR1dkQB1PnZp_einRyspak"/>
+</div>
+<script>
+        // Micro-interactions for Timer
+        let timeRemaining = 48;
+        const timerEl = document.getElementById('timer');
+        setInterval(() => {
+            if(timeRemaining > 0) {
+                timeRemaining--;
+                const mins = Math.floor(timeRemaining / 60);
+                const secs = timeRemaining % 60;
+                timerEl.innerText = `${mins}:${secs.toString().padStart(2, '0')}`;
+                
+                if(timeRemaining < 10) {
+                    timerEl.classList.remove('text-secondary-fixed');
+                    timerEl.classList.add('text-error', 'animate-pulse');
+                }
+            }
+        }, 1000);
+
+        // Score animation helper
+        let currentScore = 12450;
+        const scoreEl = document.getElementById('score');
+        window.popBubble = function(el) {
+            if(el.style.visibility === 'hidden') return;
+            el.classList.add('bubble-pop');
+            currentScore += 125;
+            scoreEl.innerText = currentScore.toLocaleString();
+            
+            // Shake effect on score
+            scoreEl.classList.add('scale-110');
+            setTimeout(() => scoreEl.classList.remove('scale-110'), 100);
+
+            setTimeout(() => {
+                el.style.visibility = 'hidden';
+                // Respawn bubble logic
+                setTimeout(() => {
+                    el.style.visibility = 'visible';
+                    el.classList.remove('bubble-pop');
+                }, 2000);
+            }, 300);
+        };
+    </script>
+</body></html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bubble Burst Simulator - Blitz Mode</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;family=Be+Vietnam+Pro:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ffb4ab",
+                        "surface-container": "#1d1f29",
+                        "on-primary-fixed": "#002020",
+                        "tertiary-container": "#75ff68",
+                        "surface-container-highest": "#32343e",
+                        "outline": "#839493",
+                        "on-tertiary-fixed-variant": "#005306",
+                        "inverse-primary": "#006a6a",
+                        "surface": "#11131c",
+                        "on-tertiary": "#003a03",
+                        "secondary-fixed": "#ffd7f5",
+                        "surface-container-lowest": "#0c0e17",
+                        "surface-container-high": "#282933",
+                        "outline-variant": "#3a4a49",
+                        "tertiary": "#ffffff",
+                        "inverse-surface": "#e1e1ef",
+                        "surface-tint": "#00dddd",
+                        "surface-bright": "#373943",
+                        "on-surface": "#e1e1ef",
+                        "secondary-container": "#fe00fe",
+                        "tertiary-fixed": "#75ff68",
+                        "surface-container-low": "#191b24",
+                        "primary-fixed-dim": "#00dddd",
+                        "on-background": "#e1e1ef",
+                        "tertiary-fixed-dim": "#4ce346",
+                        "on-secondary-container": "#500050",
+                        "surface-dim": "#11131c",
+                        "on-tertiary-container": "#00750c",
+                        "on-secondary": "#5b005b",
+                        "secondary-fixed-dim": "#ffabf3",
+                        "on-surface-variant": "#b9cac9",
+                        "on-secondary-fixed-variant": "#810081",
+                        "primary-container": "#00fbfb",
+                        "on-primary-container": "#007070",
+                        "surface-variant": "#32343e",
+                        "primary": "#ffffff",
+                        "on-primary-fixed-variant": "#004f4f",
+                        "on-error": "#690005",
+                        "on-tertiary-fixed": "#002201",
+                        "on-error-container": "#ffdad6",
+                        "inverse-on-surface": "#2e303a",
+                        "error-container": "#93000a",
+                        "background": "#11131c",
+                        "primary-fixed": "#00fbfb",
+                        "on-secondary-fixed": "#380038",
+                        "secondary": "#ffabf3",
+                        "on-primary": "#003737"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "24px",
+                        "unit": "8px",
+                        "gutter": "16px",
+                        "element-gap": "12px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "display-lg-mobile": ["Plus Jakarta Sans"],
+                        "label-bold": ["Be Vietnam Pro"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "label-bold": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-10px) scale(1.02); }
+        }
+        @keyframes pulse-glow {
+            0%, 100% { filter: drop-shadow(0 0 5px rgba(0, 251, 251, 0.3)); }
+            50% { filter: drop-shadow(0 0 20px rgba(0, 251, 251, 0.7)); }
+        }
+        .bubble-animate {
+            animation: float 4s ease-in-out infinite;
+        }
+        .combo-glow {
+            animation: pulse-glow 2s infinite;
+        }
+        .glass-panel {
+            backdrop-filter: blur(20px);
+            background: rgba(29, 31, 41, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+        }
+        .specular-highlight {
+            background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 50%);
+        }
+        .grid-container {
+            perspective: 1000px;
+        }
+        .bubble-drop {
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .bubble-drop:active {
+            transform: scale(0.8) rotate(10deg);
+        }
+        /* Custom scrollbar for game history or similar */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #00fbfb; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen font-body-md overflow-hidden selection:bg-primary-container selection:text-on-primary-container">
+<!-- Background Layer -->
+<div class="fixed inset-0 z-0">
+<div class="w-full h-full bg-cover bg-center brightness-[0.6] contrast-[1.2]" style="background-image: url('https://lh3.googleusercontent.com/aida/AP1WRLvooo8pSiWRT-717mMyHE9f2blXDYHr-F5KmwUR6XrXx5MCoDJF2hpXlC9afCZZVcJZzcK20LRwyG60RzkKFvFkSG-wG1rultitCpREAA34gdhfQqlwUW3nJaEUCyWVyhJpWIgjxgQpOLGFKNdYB4VrSXkYdWlpSACHaK016V1_z9Ul56UkB5ZtSXx121Nvykf4gkXVWEhjwksNn41RSHbKc5J8Lpbbl3z0xghKCJln2NB6yUpZmUKeXTc')"></div>
+<!-- Atmospheric overlay -->
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-surface/20"></div>
+</div>
+<!-- Top Navigation Anchor (Shared Component Mapping) -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-container-padding py-unit backdrop-blur-xl border-b border-white/20 bg-surface/10 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.3)]">
+<div class="flex items-center gap-element-gap">
+<span class="text-headline-md font-headline-md font-black text-primary-fixed-dim drop-shadow-[0_0_8px_rgba(0,221,221,0.4)] tracking-tighter">
+                Bubble Burst Simulator
+            </span>
+<div class="hidden md:flex ml-8 gap-gutter">
+<span class="text-primary-fixed font-bold text-label-bold cursor-pointer hover:scale-110 transition-all">BLITZ</span>
+<span class="text-on-surface-variant font-label-bold cursor-pointer hover:text-primary-fixed transition-colors">CHALLENGE</span>
+<span class="text-on-surface-variant font-label-bold cursor-pointer hover:text-primary-fixed transition-colors">ZEN</span>
+</div>
+</div>
+<div class="flex items-center gap-gutter">
+<div class="flex flex-col items-end mr-4">
+<span class="text-[10px] font-bold text-primary-fixed tracking-[0.2em] uppercase opacity-60">Session Score</span>
+<span class="text-headline-md font-headline-md text-primary-fixed drop-shadow-[0_0_10px_rgba(0,251,251,0.5)]" id="score-val">14,850</span>
+</div>
+<button class="w-12 h-12 flex items-center justify-center rounded-full bg-surface-container-high/40 hover:scale-110 hover:brightness-125 transition-all active:scale-90 border border-white/10">
+<span class="material-symbols-outlined text-primary-fixed" data-icon="settings">settings</span>
+</button>
+</div>
+</header>
+<!-- Main Game Canvas -->
+<main class="relative z-10 pt-24 pb-32 h-screen flex flex-col items-center justify-center px-container-padding">
+<!-- Blitz HUD Header -->
+<div class="w-full max-w-2xl flex justify-between items-center mb-8 px-4">
+<!-- Timer Module -->
+<div class="glass-panel px-6 py-3 rounded-xl flex items-center gap-4 relative overflow-hidden group">
+<div class="absolute left-0 top-0 h-full w-1 bg-primary drop-shadow-[0_0_8px_#00fbfb]"></div>
+<span class="material-symbols-outlined text-primary-fixed" data-icon="timer">timer</span>
+<div>
+<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest leading-none">Time Remaining</p>
+<p class="text-headline-md font-headline-md text-primary leading-none mt-1">00:48</p>
+</div>
+</div>
+<!-- Combo Multiplier -->
+<div class="glass-panel px-6 py-3 rounded-xl flex items-center gap-4 relative overflow-hidden combo-glow border-primary/20">
+<div class="absolute right-0 top-0 h-full w-1 bg-secondary-container drop-shadow-[0_0_8px_#fe00fe]"></div>
+<div class="text-right">
+<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest leading-none">Combo Burst</p>
+<p class="text-headline-md font-headline-md text-secondary-container leading-none mt-1">x8.5</p>
+</div>
+<span class="material-symbols-outlined text-secondary-container" data-icon="bolt">bolt</span>
+</div>
+</div>
+<!-- 6x6 Bubble Grid -->
+<div class="grid-container w-full max-w-[500px] aspect-square p-gutter glass-panel rounded-xl grid grid-cols-6 grid-rows-6 gap-3 shadow-[0_32px_64px_rgba(0,0,0,0.6)]">
+<!-- Grid generated visually for high-fi feel -->
+<!-- We'll populate some with varying colors/states -->
+<script>
+                const colors = ['#00fbfb', '#fe00fe', '#75ff68', '#ffd7f5', '#ffabf3'];
+                const grid = document.querySelector('.grid-container');
+                for (let i = 0; i < 36; i++) {
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    const isPopped = Math.random() > 0.85;
+                    const bubble = document.createElement('div');
+                    bubble.className = `relative w-full h-full rounded-full cursor-pointer bubble-drop group transition-all duration-300 ${isPopped ? 'opacity-20 scale-50 grayscale' : 'hover:scale-110'}`;
+                    
+                    if (!isPopped) {
+                        bubble.innerHTML = `
+                            <div class="absolute inset-0 rounded-full border-2 border-white/20 shadow-[inset_0_0_20px_rgba(255,255,255,0.2)]" style="background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.1) 0%, ${color}20 60%, ${color}40 100%)"></div>
+                            <div class="absolute top-[15%] left-[15%] w-1/3 h-1/4 bg-white/40 blur-[2px] rounded-full rotate-[-45deg]"></div>
+                            <div class="absolute inset-0 rounded-full group-hover:shadow-[0_0_20px_${color}80] transition-shadow"></div>
+                        `;
+                    } else {
+                        bubble.innerHTML = `<div class="absolute inset-0 rounded-full border border-white/5 bg-white/5"></div>`;
+                    }
+
+                    bubble.onclick = function() {
+                        if (!isPopped) {
+                            this.classList.add('opacity-0', 'scale-150');
+                            setTimeout(() => {
+                                this.innerHTML = `<div class="absolute inset-0 rounded-full border border-white/5 bg-white/5"></div>`;
+                                this.classList.remove('opacity-0', 'scale-150');
+                                this.classList.add('opacity-20', 'scale-50', 'grayscale');
+                            }, 200);
+                        }
+                    };
+                    grid.appendChild(bubble);
+                }
+            </script>
+</div>
+<!-- Floating Energy Gauge -->
+<div class="w-full max-w-2xl mt-8">
+<div class="flex justify-between items-center mb-2 px-2">
+<span class="text-label-bold text-primary-fixed uppercase tracking-widest">Plasma Energy</span>
+<span class="text-label-bold text-on-surface-variant">82%</span>
+</div>
+<div class="h-3 w-full bg-surface-container rounded-full overflow-hidden p-[2px] border border-white/10 shadow-[inset_0_2px_4px_rgba(0,0,0,0.5)]">
+<div class="h-full w-[82%] rounded-full bg-gradient-to-r from-primary-container via-secondary-container to-primary shadow-[0_0_15px_rgba(0,251,251,0.6)] transition-all duration-1000"></div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation (Shared Component Mapping) -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-gutter py-4 backdrop-blur-2xl border-t border-white/10 bg-surface-container-lowest/30 rounded-t-xl shadow-[0_-4px_24px_rgba(0,0,0,0.5)]">
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:opacity-100 transition-opacity active:scale-95 duration-75 cursor-pointer">
+<span class="material-symbols-outlined text-headline-md" data-icon="home">home</span>
+<span class="text-label-bold font-label-bold uppercase">Home</span>
+</div>
+<!-- Active Tab: Burst (Game context) -->
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-8 py-2 shadow-[0_0_15px_rgba(0,251,251,0.4)] hover:brightness-110 active:scale-95 duration-75 cursor-pointer">
+<span class="material-symbols-outlined text-headline-md" data-icon="bubble_chart" data-weight="fill" style="font-variation-settings: 'FILL' 1;">bubble_chart</span>
+<span class="text-label-bold font-label-bold uppercase">Burst</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:opacity-100 transition-opacity active:scale-95 duration-75 cursor-pointer">
+<span class="material-symbols-outlined text-headline-md" data-icon="leaderboard">leaderboard</span>
+<span class="text-label-bold font-label-bold uppercase">Ranks</span>
+</div>
+</nav>
+<!-- Floating Action Button: Special Move (Contextual) -->
+<button class="fixed bottom-28 right-container-padding w-16 h-16 rounded-full bg-secondary-container text-on-secondary-container shadow-[0_0_30px_rgba(254,0,254,0.5)] border-t border-white/30 flex items-center justify-center group active:scale-90 transition-all duration-100 z-40">
+<div class="absolute inset-0 rounded-full specular-highlight opacity-50"></div>
+<span class="material-symbols-outlined text-3xl group-hover:rotate-90 transition-transform duration-300" data-icon="auto_awesome">auto_awesome</span>
+</button>
+<!-- Score Micro-Interactions -->
+<script>
+        // Simple score ticker effect
+        let score = 14850;
+        const scoreEl = document.getElementById('score-val');
+        setInterval(() => {
+            if (Math.random() > 0.5) {
+                score += Math.floor(Math.random() * 50);
+                scoreEl.textContent = score.toLocaleString();
+            }
+        }, 1000);
+
+        // Add subtle movement to bubbles
+        document.addEventListener('mousemove', (e) => {
+            const bubbles = document.querySelectorAll('.bubble-drop');
+            const x = (window.innerWidth / 2 - e.pageX) / 50;
+            const y = (window.innerHeight / 2 - e.pageY) / 50;
+            
+            bubbles.forEach((bubble, index) => {
+                const shift = index % 3 === 0 ? 1.5 : 0.8;
+                bubble.style.transform = `translate(${x * shift}px, ${y * shift}px)`;
+            });
+        });
+    </script>
+</body></html>

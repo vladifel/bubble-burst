@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;family=Be+Vietnam+Pro:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ffb4ab",
+                        "surface-container": "#1d1f29",
+                        "on-primary-fixed": "#002020",
+                        "tertiary-container": "#75ff68",
+                        "surface-container-highest": "#32343e",
+                        "outline": "#839493",
+                        "on-tertiary-fixed-variant": "#005306",
+                        "inverse-primary": "#006a6a",
+                        "surface": "#11131c",
+                        "on-tertiary": "#003a03",
+                        "secondary-fixed": "#ffd7f5",
+                        "surface-container-lowest": "#0c0e17",
+                        "surface-container-high": "#282933",
+                        "outline-variant": "#3a4a49",
+                        "tertiary": "#ffffff",
+                        "inverse-surface": "#e1e1ef",
+                        "surface-tint": "#00dddd",
+                        "surface-bright": "#373943",
+                        "on-surface": "#e1e1ef",
+                        "secondary-container": "#fe00fe",
+                        "tertiary-fixed": "#75ff68",
+                        "surface-container-low": "#191b24",
+                        "primary-fixed-dim": "#00dddd",
+                        "on-background": "#e1e1ef",
+                        "tertiary-fixed-dim": "#4ce346",
+                        "on-secondary-container": "#500050",
+                        "surface-dim": "#11131c",
+                        "on-tertiary-container": "#00750c",
+                        "on-secondary": "#5b005b",
+                        "secondary-fixed-dim": "#ffabf3",
+                        "on-surface-variant": "#b9cac9",
+                        "on-secondary-fixed-variant": "#810081",
+                        "primary-container": "#00fbfb",
+                        "on-primary-container": "#007070",
+                        "surface-variant": "#32343e",
+                        "primary": "#ffffff",
+                        "on-primary-fixed-variant": "#004f4f",
+                        "on-error": "#690005",
+                        "on-tertiary-fixed": "#002201",
+                        "on-error-container": "#ffdad6",
+                        "inverse-on-surface": "#2e303a",
+                        "error-container": "#93000a",
+                        "background": "#11131c",
+                        "primary-fixed": "#00fbfb",
+                        "on-secondary-fixed": "#380038",
+                        "secondary": "#ffabf3",
+                        "on-primary": "#003737"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "24px",
+                        "unit": "8px",
+                        "gutter": "16px",
+                        "element-gap": "12px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "display-lg-mobile": ["Plus Jakarta Sans"],
+                        "label-bold": ["Be Vietnam Pro"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "label-bold": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #11131c;
+        }
+
+        .glass-vessel {
+            backdrop-filter: blur(24px);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 
+                inset 0 1px 2px rgba(255, 255, 255, 0.3),
+                inset 0 -2px 10px rgba(0, 221, 221, 0.1),
+                0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .glow-capsule {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glow-capsule::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4), transparent);
+            pointer-events: none;
+        }
+
+        .sunken-well {
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .bubble-toggle input:checked + .toggle-slider {
+            background: #00fbfb;
+            box-shadow: 0 0 15px rgba(0, 251, 251, 0.6);
+        }
+
+        .bubble-toggle input:checked + .toggle-slider::after {
+            transform: translateX(24px);
+            background: white;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        .toggle-slider::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: 0.3s;
+        }
+
+        @keyframes drift {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(20px, -30px) scale(1.05); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        .bg-bubbles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(1px);
+            opacity: 0.6;
+            animation: drift 15s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-hidden h-screen w-screen flex items-center justify-center">
+<!-- Gameplay Background Emulation -->
+<div class="fixed inset-0 z-0 bg-cover bg-center" data-alt="A mesmerizing digital underwater scene with vibrant turquoise and deep navy water. Large, translucent, glowing bubbles in cyan, violet, and soft amber float through sunbeams filtering from above. The water has caustic light patterns and refractive details, creating a hyper-realistic, liquid-filled atmosphere with a sense of immense depth and playful energy." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC3r2WmjrjcrIboNMu3lrRBm03Xkd3-1JWhHvX8yn8exjWfsoacw9NPNhaqiN7pHapMfqL4rR8LMTurCUz0l6ZzXfw-CRxFRixYIv9bxdERhBGasYOOjkUs4i7GLED8NfmvOQh_NoOAxb90cph-4DukVPXqHJPv8ezLHQv3RKukZ35EU2EjfPdzGPwGNlwzrb5MKTzX4YtIovR_MqzlzIpPV0f-D9g07QK8CMHvEEKnetThyAu-sOjpgYIrziAx7kAqyGaodbGKTSA')">
+<div class="absolute inset-0 bg-black/30 backdrop-blur-sm"></div>
+</div>
+<!-- Animated BG Bubbles for added physicality -->
+<div class="bg-bubbles pointer-events-none">
+<div class="bubble w-64 h-64 top-1/4 -left-20 bg-primary-fixed-dim/20 blur-xl" style="animation-delay: 0s;"></div>
+<div class="bubble w-96 h-96 -bottom-20 -right-20 bg-secondary-container/10 blur-2xl" style="animation-delay: -5s;"></div>
+<div class="bubble w-48 h-48 top-10 right-1/4 bg-primary-container/20 blur-lg" style="animation-delay: -2s;"></div>
+</div>
+<!-- Settings Overlay Modal -->
+<main class="relative z-10 w-full max-w-md mx-container-padding">
+<div class="glass-vessel rounded-lg p-container-padding flex flex-col gap-element-gap items-center text-center">
+<!-- Header -->
+<div class="mb-4">
+<h1 class="text-primary-fixed-dim font-black text-headline-md font-headline-md tracking-tight drop-shadow-[0_0_12px_rgba(0,221,221,0.5)]">
+                    PAUSED
+                </h1>
+<p class="text-on-surface-variant font-label-bold text-label-bold uppercase tracking-widest mt-1">
+                    Bubble Burst Simulator
+                </p>
+</div>
+<!-- Settings Sections -->
+<div class="w-full space-y-4">
+<!-- Toggles Group -->
+<div class="flex flex-col gap-2">
+<!-- Haptic Feedback Toggle -->
+<div class="flex items-center justify-between sunken-well rounded-xl px-4 py-4 border border-white/5 group hover:bg-white/5 transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary-fixed" data-icon="vibration">vibration</span>
+<span class="font-label-bold text-on-surface text-label-bold">Haptic Feedback</span>
+</div>
+<label class="bubble-toggle relative inline-block w-12 h-6 cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="toggle-slider absolute inset-0 rounded-full bg-surface-container-highest transition-all duration-300"></div>
+</label>
+</div>
+<!-- Sound Effects Toggle -->
+<div class="flex items-center justify-between sunken-well rounded-xl px-4 py-4 border border-white/5 group hover:bg-white/5 transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary-fixed" data-icon="volume_up">volume_up</span>
+<span class="font-label-bold text-on-surface text-label-bold">Sound Effects</span>
+</div>
+<label class="bubble-toggle relative inline-block w-12 h-6 cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="toggle-slider absolute inset-0 rounded-full bg-surface-container-highest transition-all duration-300"></div>
+</label>
+</div>
+</div>
+<!-- Stats Summary Bead (Chip Style) -->
+<div class="flex justify-center py-2">
+<div class="backdrop-blur-md bg-primary-container/10 border border-primary-container/30 px-6 py-2 rounded-full flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container text-sm" data-icon="bubbles" style="font-variation-settings: 'FILL' 1;">bubble_chart</span>
+<span class="text-on-primary-container font-label-bold text-xs uppercase tracking-tighter">Current Score: 24,850</span>
+</div>
+</div>
+</div>
+<!-- Action Buttons Stack -->
+<div class="w-full flex flex-col gap-3 mt-6">
+<!-- Resume -->
+<button class="glow-capsule w-full py-4 bg-primary-container text-on-primary-container rounded-xl font-headline-md text-headline-md flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(0,251,251,0.3)] active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="play_arrow" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                    Resume
+                </button>
+<!-- Restart -->
+<button class="w-full py-3 bg-surface-container-highest/50 border border-white/10 text-on-surface rounded-xl font-body-lg text-body-lg flex items-center justify-center gap-2 hover:bg-surface-container-highest active:scale-95 transition-all">
+<span class="material-symbols-outlined" data-icon="refresh">refresh</span>
+                    Restart
+                </button>
+<!-- Quit -->
+<button class="w-full py-3 bg-error-container/30 border border-error/20 text-error rounded-xl font-body-lg text-body-lg flex items-center justify-center gap-2 hover:bg-error-container/50 active:scale-95 transition-all mt-2">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+                    Quit to Menu
+                </button>
+</div>
+</div>
+</main>
+<!-- Global Nav Simulation (Suppressed as per "Task-Focused" rule, but TopAppBar for Brand) -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-container-padding py-4 backdrop-blur-xl border-b border-white/10">
+<div class="text-headline-md font-headline-md font-black text-primary-fixed-dim drop-shadow-[0_0_8px_rgba(0,221,221,0.4)]">
+            Bubble Burst Simulator
+        </div>
+<div class="flex items-center gap-element-gap">
+<div class="w-10 h-10 rounded-full sunken-well flex items-center justify-center border border-white/10">
+<span class="material-symbols-outlined text-primary-fixed" data-icon="person">person</span>
+</div>
+</div>
+</header>
+<script>
+        // Micro-interactions for buttons
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('mouseenter', () => {
+                const glow = btn.classList.contains('glow-capsule');
+                if(glow) btn.style.boxShadow = '0 0 30px rgba(0,251,251,0.5)';
+            });
+            btn.addEventListener('mouseleave', () => {
+                const glow = btn.classList.contains('glow-capsule');
+                if(glow) btn.style.boxShadow = '0 0 20px rgba(0,251,251,0.3)';
+            });
+        });
+
+        // Toggle state simulation
+        document.querySelectorAll('.bubble-toggle input').forEach(input => {
+            input.addEventListener('change', (e) => {
+                if (window.navigator.vibrate && e.target.checked) {
+                    window.navigator.vibrate(20);
+                }
+            });
+        });
+    </script>
+</body></html>

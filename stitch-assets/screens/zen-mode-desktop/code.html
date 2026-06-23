@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bubble Burst Simulator - Zen Mode</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;family=Be+Vietnam+Pro:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ffb4ab",
+                        "surface-container": "#1d1f29",
+                        "on-primary-fixed": "#002020",
+                        "tertiary-container": "#75ff68",
+                        "surface-container-highest": "#32343e",
+                        "outline": "#839493",
+                        "on-tertiary-fixed-variant": "#005306",
+                        "inverse-primary": "#006a6a",
+                        "surface": "#11131c",
+                        "on-tertiary": "#003a03",
+                        "secondary-fixed": "#ffd7f5",
+                        "surface-container-lowest": "#0c0e17",
+                        "surface-container-high": "#282933",
+                        "outline-variant": "#3a4a49",
+                        "tertiary": "#ffffff",
+                        "inverse-surface": "#e1e1ef",
+                        "surface-tint": "#00dddd",
+                        "surface-bright": "#373943",
+                        "on-surface": "#e1e1ef",
+                        "secondary-container": "#fe00fe",
+                        "tertiary-fixed": "#75ff68",
+                        "surface-container-low": "#191b24",
+                        "primary-fixed-dim": "#00dddd",
+                        "on-background": "#e1e1ef",
+                        "tertiary-fixed-dim": "#4ce346",
+                        "on-secondary-container": "#500050",
+                        "surface-dim": "#11131c",
+                        "on-tertiary-container": "#00750c",
+                        "on-secondary": "#5b005b",
+                        "secondary-fixed-dim": "#ffabf3",
+                        "on-surface-variant": "#b9cac9",
+                        "on-secondary-fixed-variant": "#810081",
+                        "primary-container": "#00fbfb",
+                        "on-primary-container": "#007070",
+                        "surface-variant": "#32343e",
+                        "primary": "#ffffff",
+                        "on-primary-fixed-variant": "#004f4f",
+                        "on-error": "#690005",
+                        "on-tertiary-fixed": "#002201",
+                        "on-error-container": "#ffdad6",
+                        "inverse-on-surface": "#2e303a",
+                        "error-container": "#93000a",
+                        "background": "#11131c",
+                        "primary-fixed": "#00fbfb",
+                        "on-secondary-fixed": "#380038",
+                        "secondary": "#ffabf3",
+                        "on-primary": "#003737"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "24px",
+                        "unit": "8px",
+                        "gutter": "16px",
+                        "element-gap": "12px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "display-lg-mobile": ["Plus Jakarta Sans"],
+                        "label-bold": ["Be Vietnam Pro"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "label-bold": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+
+        @keyframes pop {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.4); opacity: 0.5; filter: brightness(1.5); }
+            100% { transform: scale(0); opacity: 0; }
+        }
+
+        .bubble-container {
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .bubble-container:hover {
+            transform: scale(1.1);
+            filter: brightness(1.2);
+        }
+
+        .bubble-popped {
+            animation: pop 0.4s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: none;
+        }
+
+        .glass-panel {
+            backdrop-filter: blur(20px);
+            background: rgba(17, 19, 28, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2), 
+                        0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .caustic-bg {
+            background-image: url('https://lh3.googleusercontent.com/aida/AP1WRLvooo8pSiWRT-717mMyHE9f2blXDYHr-F5KmwUR6XrXx5MCoDJF2hpXlC9afCZZVcJZzcK20LRwyG60RzkKFvFkSG-wG1rultitCpREAA34gdhfQqlwUW3nJaEUCyWVyhJpWIgjxgQpOLGFKNdYB4VrSXkYdWlpSACHaK016V1_z9Ul56UkB5ZtSXx121Nvykf4gkXVWEhjwksNn41RSHbKc5J8Lpbbl3z0xghKCJln2NB6yUpZmUKeXTc');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .neon-glow {
+            text-shadow: 0 0 10px rgba(0, 251, 251, 0.6);
+        }
+
+        .bubble-img {
+            filter: drop-shadow(0 4px 12px rgba(0, 221, 221, 0.2));
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md selection:bg-primary-container selection:text-on-primary-container overflow-hidden">
+<!-- Backdrop with Caustics -->
+<div class="fixed inset-0 caustic-bg opacity-80 z-0"></div>
+<div class="fixed inset-0 bg-gradient-to-b from-transparent to-background/60 pointer-events-none z-0"></div>
+<!-- TopNavBar Shell -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-container-padding py-unit backdrop-blur-xl border-b border-white/20 bg-surface/10">
+<div class="flex items-center gap-element-gap">
+<span class="text-headline-md font-headline-md font-black text-primary-fixed-dim drop-shadow-[0_0_8px_rgba(0,221,221,0.4)]">
+                Bubble Burst Simulator
+            </span>
+<div class="hidden md:flex gap-gutter ml-gutter">
+<span class="text-on-surface-variant font-label-bold text-label-bold opacity-60">Zen Mode</span>
+</div>
+</div>
+<div class="flex items-center gap-gutter">
+<!-- Score Counter -->
+<div class="glass-panel px-6 py-2 rounded-full flex items-center gap-element-gap">
+<span class="text-on-surface-variant font-label-bold text-label-bold uppercase tracking-widest">Bubbles Popped</span>
+<span class="text-headline-md font-headline-md text-primary-fixed neon-glow" id="pop-count">0</span>
+</div>
+<!-- Settings Action -->
+<button class="material-symbols-outlined text-primary dark:text-primary-fixed hover:scale-110 hover:brightness-125 transition-all active:scale-90 duration-100 p-2 glass-panel rounded-full" data-icon="settings">
+                settings
+            </button>
+</div>
+</header>
+<!-- Main Gameplay Canvas -->
+<main class="relative z-10 w-full min-h-screen flex flex-col items-center justify-center pt-24 pb-32">
+<!-- Game Container / Bento Grid Layout for UI but focus on central 6x6 -->
+<div class="max-w-4xl w-full px-container-padding">
+<div class="flex flex-col items-center space-y-gutter">
+<!-- Zen Instructions -->
+<div class="glass-panel px-8 py-3 rounded-full mb-gutter animate-pulse">
+<p class="text-on-surface font-label-bold text-label-bold opacity-80 uppercase tracking-tighter">Breathe in. Tap a bubble to release.</p>
+</div>
+<!-- 6x6 Bubble Grid -->
+<div class="grid grid-cols-6 gap-4 p-gutter glass-panel rounded-xl aspect-square max-w-[600px] w-full justify-items-center items-center shadow-[inset_0_0_40px_rgba(0,251,251,0.05)]" id="game-grid">
+<!-- Grid items populated by JS -->
+</div>
+<!-- Visual feedback hint -->
+<div class="mt-element-gap text-on-surface-variant font-body-md opacity-40">
+                    Zen state: Continuous flow active
+                </div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar Shell -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-gutter py-4 backdrop-blur-2xl border-t border-white/10 bg-surface-container-lowest/30 rounded-t-xl shadow-[0_-4px_24px_rgba(0,0,0,0.5)]">
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:opacity-100 transition-opacity active:scale-95 duration-75" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="home">home</span>
+<span class="text-label-bold font-label-bold uppercase">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-6 py-2 shadow-[0_0_15px_rgba(0,251,251,0.4)] hover:opacity-100 transition-opacity active:scale-95 duration-75" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="bubble_chart">bubble_chart</span>
+<span class="text-label-bold font-label-bold uppercase">Burst</span>
+</a>
+</nav>
+<!-- Floating Atmosphere FX (Particles) -->
+<div class="fixed inset-0 pointer-events-none z-0" id="particles"></div>
+<script>
+        const grid = document.getElementById('game-grid');
+        const countDisplay = document.getElementById('pop-count');
+        const particleContainer = document.getElementById('particles');
+        let count = 0;
+
+        // Initialize 6x6 Grid
+        function initGrid() {
+            grid.innerHTML = '';
+            for (let i = 0; i < 36; i++) {
+                const bubbleWrapper = document.createElement('div');
+                bubbleWrapper.className = 'bubble-container relative w-full h-full flex items-center justify-center cursor-pointer';
+                
+                const bubbleImg = document.createElement('img');
+                bubbleImg.src = 'https://lh3.googleusercontent.com/aida/AP1WRLuV_bjij-FfcIAmEl5U_VQCY9LZTjvkVKnJUV5rJ8NBVJDRQLcMtOCuSNxTeowRGZzxP4apzsjc4RncR9JjEuBUkUJIcKD5xCVy8CfxbN09G2BBQgXHTsfDeU1WbPYySsKhnKzcxi0lWQAe8GG77dJognJdDtAHguzt6kflM0fkUNv4ziANJiwSKwF9D1ijawxNMOBBEBoWIUw4D8LzNHBICOTJVWkWlyYw-ltowgdOSM7z_1p6cCOenyM';
+                bubbleImg.className = 'bubble-img w-full h-full object-contain';
+                bubbleImg.style.animation = `float ${3 + Math.random() * 2}s ease-in-out infinite alternate`;
+                bubbleImg.style.animationDelay = `${Math.random() * 2}s`;
+                
+                bubbleWrapper.appendChild(bubbleImg);
+                
+                bubbleWrapper.addEventListener('click', (e) => {
+                    popBubble(bubbleWrapper, e);
+                });
+
+                grid.appendChild(bubbleWrapper);
+            }
+        }
+
+        function popBubble(element, event) {
+            if (element.classList.contains('bubble-popped')) return;
+
+            // Visual Pop
+            element.classList.add('bubble-popped');
+            
+            // Increment Count
+            count++;
+            countDisplay.innerText = count;
+            countDisplay.classList.add('scale-125');
+            setTimeout(() => countDisplay.classList.remove('scale-125'), 150);
+
+            // Audio would go here in real game
+
+            // Haptic/Particle effect
+            createParticles(event.clientX, event.clientY);
+
+            // Respawn after delay for Zen Mode (infinite play)
+            setTimeout(() => {
+                element.classList.remove('bubble-popped');
+            }, 3000);
+        }
+
+        function createParticles(x, y) {
+            for (let i = 0; i < 8; i++) {
+                const p = document.createElement('div');
+                p.className = 'absolute w-2 h-2 rounded-full bg-primary-fixed opacity-60';
+                p.style.left = `${x}px`;
+                p.style.top = `${y}px`;
+                p.style.transition = 'all 0.6s cubic-bezier(0, .5, .5, 1)';
+                
+                particleContainer.appendChild(p);
+
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 40 + Math.random() * 60;
+                
+                requestAnimationFrame(() => {
+                    p.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(0)`;
+                    p.style.opacity = '0';
+                });
+
+                setTimeout(() => p.remove(), 600);
+            }
+        }
+
+        // Lightweight background particles for mood
+        function createAtmosphericParticles() {
+            for (let i = 0; i < 15; i++) {
+                const p = document.createElement('div');
+                p.className = 'fixed rounded-full bg-primary-fixed-dim opacity-10 blur-xl pointer-events-none';
+                const size = 100 + Math.random() * 200;
+                p.style.width = `${size}px`;
+                p.style.height = `${size}px`;
+                p.style.left = `${Math.random() * 100}vw`;
+                p.style.top = `${Math.random() * 100}vh`;
+                
+                const animDuration = 20 + Math.random() * 30;
+                p.style.transition = `all ${animDuration}s linear`;
+                
+                document.body.appendChild(p);
+
+                const move = () => {
+                    p.style.left = `${Math.random() * 100}vw`;
+                    p.style.top = `${Math.random() * 100}vh`;
+                    setTimeout(move, animDuration * 1000);
+                };
+                setTimeout(move, 100);
+            }
+        }
+
+        initGrid();
+        createAtmosphericParticles();
+    </script>
+</body></html>
