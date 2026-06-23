@@ -242,8 +242,8 @@
   padding: 0;
   overflow: hidden;
   background: var(--color-background);
-  height: min(100dvh, 512px);
-  max-height: 512px;
+  height: 100%;
+  min-height: 100%;
   position: relative;
 }
 
@@ -815,8 +815,8 @@
 @media (max-width: 767px) {
   .gate-v2,
   .hub-screen {
-    height: min(100dvh, 512px);
-    max-height: 512px;
+    height: 100%;
+    min-height: 100%;
     width: 100%;
     max-width: none;
     margin: 0;
@@ -1948,8 +1948,8 @@
   padding: 0;
   overflow: hidden;
   background: radial-gradient(circle at 50% 50%, #11131c 0%, #0c0e17 100%);
-  height: min(100dvh, 512px);
-  max-height: 512px;
+  height: 100%;
+  min-height: 100%;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -2301,8 +2301,8 @@
   }
 
   .screen-stats.hub-screen {
-    height: 100dvh;
-    max-height: none;
+    height: 100%;
+    min-height: 100%;
     width: 100%;
     max-width: none;
     overflow: hidden;
@@ -2344,11 +2344,18 @@
 
 @media (max-width: 767px) {
   .screen-stats.hub-screen {
-    height: min(100dvh, 512px);
-    max-height: 512px;
+    height: 100%;
+    min-height: 100%;
     display: flex;
     flex-direction: column;
     background: #11131c;
+  }
+
+  .stats-page-mobile {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    touch-action: pan-y;
   }
 }
 
