@@ -53,6 +53,10 @@ export function renderGateScreen(state: UiState, handlers: GateHandlers): HTMLEl
             el('span', { text: `${formatScore(state.lifetimePops)} XP` }),
           ]),
         ]),
+        el('p', {
+          className: 'gate-play-hint label-caps',
+          text: 'Choose a mode below to start playing',
+        }),
       ]),
       el('div', { className: 'gate-mode-actions' }, [
         renderModeButton('Zen Mode', 'spa', false, handlers.onZen),

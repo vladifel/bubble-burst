@@ -116,3 +116,17 @@ button:disabled {
   margin: 0;
   color: var(--color-on-surface-variant);
 }
+
+.splash-card .splash-steps {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.gate-play-hint {
+  margin: 0.75rem 0 0;
+  color: var(--color-on-surface-variant);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-align: center;
+}
