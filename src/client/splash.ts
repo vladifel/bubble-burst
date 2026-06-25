@@ -2,7 +2,7 @@ import { requestExpandedMode } from '@devvit/web/client';
 
 const startButton = document.getElementById('start-button');
 
-function openGame(event: Event): void {
+function openGame(event: MouseEvent): void {
   try {
     requestExpandedMode(event, 'game');
   } catch {
@@ -10,4 +10,6 @@ function openGame(event: Event): void {
   }
 }
 
-startButton?.addEventListener('click', openGame);
+startButton?.addEventListener('click', (event) => {
+  openGame(event as MouseEvent);
+});
