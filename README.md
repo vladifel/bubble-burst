@@ -1,5 +1,7 @@
 # Bubble Burst
 
+![Bubble Burst home screen with Zen Mode and Blitz Mode buttons](https://raw.githubusercontent.com/vladifel/bubble-burst/main/docs/game-screenshot.png)
+
 **Bubble Burst** is a bubble-matching arcade game built for Reddit with [Devvit](https://developers.reddit.com/). Players pop connected bubbles of the same color inside a subreddit post — no external site or download required.
 
 ## What this app does
